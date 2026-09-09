@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -35,13 +36,18 @@ app.get('/', (req, res) => {
   `);
 });
 
+import { seedDatabase } from './seed.js';
+
 // Optional MongoDB Connection (Mongoose)
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/coordiflow';
 
 mongoose.connect(MONGO_URI)
-  .then(() => console.log('🟢 Connected to MongoDB Database successfully!'))
+  .then(async () => {
+    console.log('🟢 Connected to MongoDB Database successfully!');
+    await seedDatabase();
+  })
   .catch((err) => {
-    console.log('ℹ️ MongoDB URI not connected locally; running with Express In-Memory Store.');
+    console.log('ℹ️ MongoDB Atlas URI pending; running with Express In-Memory Data Store.');
   });
 
 app.listen(PORT, () => {
