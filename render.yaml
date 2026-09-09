@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: coordiflow-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server/server.js
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://admin:CoordiFlow123@cluster0.o4tfrqo.mongodb.net/coordiflow?retryWrites=true&w=majority
+      - key: PORT
+        value: 5000
